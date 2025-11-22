@@ -3,63 +3,46 @@ import fetch from "node-fetch";
 
 const app = express();
 
-// Aceitar GET sem corpo
+// Aceita GET simples
 app.get("/webhook", async (req, res) => {
   try {
-    // Chamada para sua API do painel
-    const apiURL =
-      "https://painelxstart.top/api/chatbot/PkaL4V5Wgr/JOALy014wx";
-
+    // Chamar API do painel
+    const apiURL = "https://painelxstart.top/api/chatbot/PkaL4V5Wgr/JOALy014wx";
     const r = await fetch(apiURL);
     const data = await r.json();
 
-    // Texto padrão, já que não teremos deviceType nem listaTipo
-    const deviceType = "android"; 
-    const listaTipo = "sem-adulto"; 
-
-    let apps = `
-📱 *Celular Android / TV Box*
-
-📲 VUSER  
-https://play.google.com/store/apps/details?id=com.p2plobo.app
-
-📲 PLAYSIM  
-https://play.google.com/store/apps/details?id=com.ultrastream.ultraxcplayer
-`;
-
-    // Mensagem para retorno
+    // ================================
+    // 🔥 FORMATAÇÃO FLUXPLAY IPTV
+    // ================================
     const msg = `
-🚀 *FluxPlay IPTV – Seu Teste Está Pronto!*
+🚀 *FluxPlay IPTV – Seu Teste Foi Gerado!*
 
-Aqui estão seus dados:
+Aqui estão os seus dados de acesso:
 
 👤 *Usuário:* ${data.username}
 🔑 *Senha:* ${data.password}
-🌐 *URL:* ${data.dns}
-⏳ *Validade:* ${data.expiresAtFormatted}
+🌐 *URL do Servidor:* ${data.dns}
+📆 *Criado em:* ${data.createdAtFormatted}
+⏳ *Válido até:* ${data.expiresAtFormatted}
+📱 *Conexões:* ${data.connections}
 
-📦 *Lista:* ${
-      listaTipo === "adulto" ? "COM canais adultos" : "SEM canais adultos"
-    }
+📦 *Plano referente ao teste:*  
+${data.package}
 
-${apps}
+----------------------------------------------------
 
-💳 *Assinar Plano:*  
-${data.payUrl}
-
-Qualquer dúvida, posso te ajudar! 😊
+Se precisar de ajuda para instalar, posso te guiar passo a passo! 😊
 `;
 
-    // AutoReply precisa de texto simples
+    // RETORNO EM TEXTO PURO PARA O AUTOREPLY
     return res.send(msg);
 
   } catch (err) {
-    console.error(err);
-
-    return res.send("❌ Não consegui gerar seu teste agora. Tente novamente.");
+    console.log(err);
+    return res.send("⚠️ Tivemos um problema ao gerar seu teste. Tente novamente.");
   }
 });
 
-// Porta do Render
+// Porta Render
 const PORT = process.env.PORT || 10000;
-app.listen(PORT, () => console.log("🚀 Webhook ativo no Render"));
+app.listen(PORT, () => console.log("Webhook FluxPlay ativo"));
