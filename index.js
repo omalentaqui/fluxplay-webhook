@@ -4,10 +4,20 @@ import fetch from "node-fetch";
 const app = express();
 app.use(express.json());
 
-// Função que gera o texto retornado para o Dialogflow
+// === Função que chama a API nova (POST) e monta o texto ===
 async function gerarMensagem() {
-  const apiURL = "https://painelxstart.top/api/chatbot/PkaL4V5Wgr/JOALy014wx";
-  const r = await fetch(apiURL);
+  const apiURL = "https://seventvpainel.top/api/chatbot/MeWe0QbDnN/z2BDvoWrkj";
+
+  // A API só funciona em POST → então vamos usar POST.
+  const r = await fetch(apiURL, {
+    method: "POST",
+    headers: {
+      "accept": "application/json",
+      "content-type": "application/json"
+    },
+    body: "{}"
+  });
+
   const data = await r.json();
 
   return `
@@ -17,42 +27,35 @@ Aqui estão os seus dados:
 
 👤 *Usuário:* ${data.username}
 🔑 *Senha:* ${data.password}
-🌐 *URL:* ${data.dns}
-📆 *Criado em:* ${data.createdAtFormatted}
+🌐 *Servidor:* ${data.dns}
+
+📆 *Criado:* ${data.createdAtFormatted}
 ⏳ *Válido até:* ${data.expiresAtFormatted}
 📱 *Conexões:* ${data.connections}
 
-📦 *Plano:* ${data.package}
+📦 *Pacote:* ${data.package}
 
 -----------------------------------------
 
-Se precisar de ajuda com a instalação, posso te orientar 😉
+Se precisar do passo-a-passo de instalação é só pedir 😉
 `;
 }
 
-/* ======================================
-   🔵 POST /webhook — EXCLUSIVO DIALOGFLOW
-   ====================================== */
+// === ROTA SOMENTE PARA DIALOGFLOW (POST) ===
 app.post("/webhook", async (req, res) => {
   try {
     const msg = await gerarMensagem();
-
-    return res.json({
-      fulfillmentText: msg
-    });
+    return res.json({ fulfillmentText: msg });
 
   } catch (err) {
-    console.error("Erro no webhook:", err);
+    console.error("🔥 ERRO AO GERAR TESTE:", err);
 
     return res.json({
-      fulfillmentText:
-        "⚠️ Ocorreu um erro ao gerar seu teste. Tente novamente em instantes."
+      fulfillmentText: "⚠️ Erro ao gerar seu teste. Tente novamente em instantes."
     });
   }
 });
 
-/* Porta do Render */
+// Porta Render
 const PORT = process.env.PORT || 10000;
-app.listen(PORT, () =>
-  console.log(`🔥 Webhook FluxPlay ativo exclusivamente para Dialogflow`)
-);
+app.listen(PORT, () => console.log("🔥 Webhook FluxPlay ativo (POST somente)"));
