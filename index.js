@@ -46,8 +46,8 @@ ${linkCurtoM3U}
 
 💳 *Assinar / Renovar:*  
 (Plano Mensal): https://mpago.la/1aKsznY  
-(Plano Trimestral): —  
-(Plano Semestral): —  
+(Plano Trimestral): https://mpago.la/1RDwRQ3  
+(Plano Semestral): https://mpago.la/1Z7EQZQ  
 
 Se precisar de ajuda para instalação, podemos te orientar.
 Digite *9* para falar com nossa equipe 😉
